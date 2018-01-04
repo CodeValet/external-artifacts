@@ -17,9 +17,13 @@ def call(Map args) {
         System.setProperty(propertyName,
             'sandbox allow-scripts allow-same-origin;')
     }
+
     String uploadScriptName = '__azure-upload.sh'
-    String uploadScript = libraryResource 'io/codevalet/externalartifacts/upload-file-azure.sh'
-    writeFile file: uploadScriptName, text: uploadScript
+    /* Only grab the file if it doesn't exist already */
+    if (!fileExists(uploadScriptName)) {
+        String uploadScript = libraryResource 'io/codevalet/externalartifacts/upload-file-azure.sh'
+        writeFile file: uploadScriptName, text: uploadScript
+    }
 
     String uploadedUrl
     withCredentials([string(credentialsId: 'azure-access-key',
