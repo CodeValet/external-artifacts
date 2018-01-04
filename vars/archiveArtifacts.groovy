@@ -4,13 +4,20 @@
 
 def call(Map args) {
     assert args.artifacts
+
+    String propertyName = 'hudson.model.DirectoryBrowserSupport.CSP'
+    /* Mess with Jenkins' Content-Security Policy settings to allow our
+     * redirects, gnarly
+     */
+    if (null == System.getProperty(propertyName)) {
+        System.setProperty(propertyName,
+            'sandbox allow-scripts allow-same-origin;')
+    }
     String uploadScriptName = '__azure-upload.sh'
     String uploadScript = libraryResource 'io/codevalet/externalartifacts/upload-file-azure.sh'
     writeFile file: uploadScriptName, text: uploadScript
-    sh 'ls -lah'
     String uploadedUrl = sh(script: "bash ${uploadScriptName} ${args.artifacts}",
                             returnStdout: true).trim()
-    echo uploadedUrl
 
     if (uploadedUrl =~ /https\:\/\//) {
         /* if the output was a URL, generate our redirect file */
@@ -18,6 +25,9 @@ def call(Map args) {
         String redirectHtml = "<html><head><meta http-equiv=\"refresh\" content=\"0;URL=${uploadedUrl}\" /><title>Redirecting...</title></head><body><center>${args.artifacts} can be downloaded <a href=\"${uploadedUrl}\">from Azure</a></center></body></html>"
         writeFile file: redirectFile, text:redirectHtml
         steps.archiveArtifacts redirectFile
+    }
+    else  {
+        echo uploadedUrl
     }
 }
 
