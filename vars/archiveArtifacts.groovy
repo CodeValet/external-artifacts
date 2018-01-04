@@ -8,7 +8,7 @@ def call(Map args) {
     String uploadScript = libraryResource 'io/codevalet/externalartifacts/upload-file-azure.sh'
     writeFile file: uploadScriptName, text: uploadScript
     sh 'ls -lah'
-    sh "bash ${uploadScriptName}"
+    sh "bash ${uploadScriptName} ${args.artifacts}"
 }
 
 def call(String artifacts) {
