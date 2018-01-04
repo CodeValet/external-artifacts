@@ -1,0 +1,7 @@
+= External Artifacts
+
+This link:https://jenkins.io/doc/book/pipeline/shared-libraries[Pipeline Shared Library]
+performs an
+link:http://unethicalblogger.com/2017/08/03/overriding-builtin-steps-pipeline.html[override]
+of the built-in `archive` and `archiveArtifacts` steps to provide external
+artifact storage.
