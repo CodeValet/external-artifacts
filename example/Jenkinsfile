@@ -1,5 +1,5 @@
 pipeline {
-    agent { docker 'ubuntu' }
+    agent { dockerfile true }
 
     environment {
         AZURE_STORAGE_ACCOUNT = 'codevaletartifacts'
