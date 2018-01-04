@@ -1,12 +1,6 @@
 pipeline {
     agent { dockerfile { dir 'example' } }
 
-    environment {
-        AZURE_STORAGE_ACCOUNT = 'codevaletartifacts'
-        AZURE_CONTAINER_NAME  = 'jenkins'
-        AZURE_ACCESS_KEY      = credentials('azure-access-key')
-    }
-
     stages {
         stage('Test') {
             steps {

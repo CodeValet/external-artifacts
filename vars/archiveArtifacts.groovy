@@ -16,8 +16,14 @@ def call(Map args) {
     String uploadScriptName = '__azure-upload.sh'
     String uploadScript = libraryResource 'io/codevalet/externalartifacts/upload-file-azure.sh'
     writeFile file: uploadScriptName, text: uploadScript
-    String uploadedUrl = sh(script: "bash ${uploadScriptName} ${args.artifacts}",
+
+    String uploadedUrl
+    withCredentials([string(credentialsId: 'azure-access-key',
+        variable: 'AZURE_ACCESS_KEY')]) {
+
+        uploadedUrl = sh(script: "bash ${uploadScriptName} ${args.artifacts}",
                             returnStdout: true).trim()
+    }
 
     if (uploadedUrl =~ /https\:\/\//) {
         /* if the output was a URL, generate our redirect file */
