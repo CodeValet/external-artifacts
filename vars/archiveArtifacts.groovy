@@ -15,7 +15,7 @@ def call(Map args) {
     if (uploadedUrl =~ /https\:\/\//) {
         /* if the output was a URL, generate our redirect file */
         String redirectFile = "${args.artifacts}.html"
-        String redirectHtml = "<html><head><meta http-equiv=\"refresh\" content=\"0;URL=${uploadedUrl}\" /><title>Redirecting...</title></head><body>Redirecting to ${uploadedUrl}</body></html>"
+        String redirectHtml = "<html><head><meta http-equiv=\"refresh\" content=\"0;URL=${uploadedUrl}\" /><title>Redirecting...</title></head><body><center>${args.artifacts} can be downloaded <a href=\"${uploadedUrl}\">from Azure</a></center></body></html>"
         writeFile file: redirectFile, text:redirectHtml
         steps.archiveArtifacts redirectFile
     }
