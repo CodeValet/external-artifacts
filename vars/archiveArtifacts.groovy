@@ -4,7 +4,11 @@
 
 def call(Map args) {
     assert args.artifacts
-    echo args
+    String uploadScriptName = '__azure-upload.sh'
+    String uploadScript = libraryResource 'io/codevalet/externalartifacts/upload-file-azure.sh'
+    writeFile file: uploadScript, text: uploadScript
+    sh 'ls -lah'
+    sh "bash ${uploadScriptName}"
 }
 
 def call(String artifacts) {
