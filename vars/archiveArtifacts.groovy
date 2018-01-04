@@ -8,7 +8,17 @@ def call(Map args) {
     String uploadScript = libraryResource 'io/codevalet/externalartifacts/upload-file-azure.sh'
     writeFile file: uploadScriptName, text: uploadScript
     sh 'ls -lah'
-    sh "bash ${uploadScriptName} ${args.artifacts}"
+    String uploadedUrl = sh(script: "bash ${uploadScriptName} ${args.artifacts}",
+                            returnStdout: true).trim()
+    echo uploadedUrl
+
+    if (uploadedUrl.match(/https\:\/\//)) {
+        /* if the output was a URL, generate our redirect file */
+        String redirectFile = "${args.artifacts}.html"
+        String redirectHtml = "<html><head><meta http-equiv=\"refresh\" content=\"0;url=${uploadedUrl}\" /></head><body></body></html>"
+        writeFile file: redirectFile, text:redirectHtml
+        steps.archiveArtifacts redirectFile
+    }
 }
 
 def call(String artifacts) {
