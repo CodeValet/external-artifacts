@@ -1,7 +1,5 @@
 = External Artifacts
 
-:imagesdir: :https://raw.githubusercontent.com/CodeValet/external-artifacts/master/
-
 This link:https://jenkins.io/doc/book/pipeline/shared-libraries[Pipeline Shared Library]
 performs an
 link:http://unethicalblogger.com/2017/08/03/overriding-builtin-steps-pipeline.html[override]
@@ -14,7 +12,7 @@ artifact storage.
 The main entrypoint for this library is to load it as a Global Pipeline
 Library:
 
-image::global-pipeline-libraries.png[Configuring the Pipeline Library]
+image::https://raw.githubusercontent.com/CodeValet/external-artifacts/master/global-pipeline-libraries.png[Configuring the Pipeline Library]
 
 === Environment Variables
 
@@ -24,11 +22,11 @@ link:http://localhost:8080/configure[JENKINS_HOME/configure]:
 * `AZURE_STORAGE_ACCOUNT`
 * `AZURE_CONTAINER_NAME`
 
-image::environment-variables.png[Configuring Environent Variables]
+image::https://raw.githubusercontent.com/CodeValet/external-artifacts/master/environment-variables.png[Configuring Environent Variables]
 
 === Credentials
 
 A "Secret Text" credential should be defined with the ID `azure-access-key`,
 and contain an Azure Storage Account "Access Key."
 
-image::credentials.png[Configuring Credentials]
+image::https://raw.githubusercontent.com/CodeValet/external-artifacts/master/credentials.png[Configuring Credentials]
