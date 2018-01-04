@@ -15,7 +15,7 @@ def call(Map args) {
     if (uploadedUrl =~ /https\:\/\//) {
         /* if the output was a URL, generate our redirect file */
         String redirectFile = "${args.artifacts}.html"
-        String redirectHtml = "<html><head><meta http-equiv=\"refresh\" content=\"0;url=${uploadedUrl}\" /></head><body></body></html>"
+        String redirectHtml = "<html><head><meta http-equiv=\"refresh\" content=\"0;URL=${uploadedUrl}\" /><title>Redirecting...</title></head><body>Redirecting to ${uploadedUrl}</body></html>"
         writeFile file: redirectFile, text:redirectHtml
         steps.archiveArtifacts redirectFile
     }
