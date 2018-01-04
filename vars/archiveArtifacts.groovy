@@ -5,6 +5,10 @@
 def call(Map args) {
     assert args.artifacts
 
+    if (args.artifacts =~ /\*/) {
+        error "archiveArtifacts with external storage doesn't support patterns right now"
+    }
+
     String propertyName = 'hudson.model.DirectoryBrowserSupport.CSP'
     /* Mess with Jenkins' Content-Security Policy settings to allow our
      * redirects, gnarly
