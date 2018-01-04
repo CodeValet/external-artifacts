@@ -8,5 +8,5 @@ def call(Map args) {
 }
 
 def call(String artifacts) {
-    return call(artifacts: includes)
+    return call(artifacts: artifacts)
 }
