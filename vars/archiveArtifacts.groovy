@@ -12,7 +12,7 @@ def call(Map args) {
                             returnStdout: true).trim()
     echo uploadedUrl
 
-    if (uploadedUrl.match(/https\:\/\//)) {
+    if (uploadedUrl =~ /https\:\/\//) {
         /* if the output was a URL, generate our redirect file */
         String redirectFile = "${args.artifacts}.html"
         String redirectHtml = "<html><head><meta http-equiv=\"refresh\" content=\"0;url=${uploadedUrl}\" /></head><body></body></html>"
