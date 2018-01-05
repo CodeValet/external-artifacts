@@ -30,3 +30,30 @@ A "Secret Text" credential should be defined with the ID `azure-access-key`,
 and contain an Azure Storage Account "Access Key."
 
 image::https://raw.githubusercontent.com/CodeValet/external-artifacts/master/credentials.png[Configuring Credentials]
+
+== Notes for the future
+
+=== Artifact Pointer
+
+It might make sense to implement an artifact pointer (via a plugin extending
+link:https://jenkins.io/doc/developer/extensions/jenkins-core/#artifactmanagerfactory[this extension point])
+which avoids the need for an HTTP redirect.
+
+An artifact pointer could be described as a JSON file, e.g.:
+
+.timestamps.txt.jartptr
+[source,json]
+=====
+{
+    "fingerprint" : "<md5sum of original file>",
+    "uri" : "https://some/external/uri",
+    "name" : "timestamps.txt",
+    "attributes" : {
+        "bytes" : 309,
+        "ctime" : "2018-01-04 17:00:00Z"
+    }
+}
+====
+
+Jenkins could then identify this file as such, and link a `timestamps.txt` in
+the web UI directly to the `uri` attribute defined in the `.jartptr` manifest.
